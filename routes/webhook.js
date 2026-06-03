@@ -7,7 +7,10 @@ router.get("/", (req, res) => {
   const mode = req.query["hub.mode"];
   const token = req.query["hub.verify_token"];
   const challenge = req.query["hub.challenge"];
+console.log("🔥 WEBHOOK HIT");
+  console.log(JSON.stringify(req.body, null, 2));
 
+  res.sendStatus(200);
   if (
     mode === "subscribe" &&
     token === process.env.VERIFY_TOKEN
