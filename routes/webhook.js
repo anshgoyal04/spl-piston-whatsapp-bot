@@ -12,7 +12,7 @@ router.get("/", (req, res) => {
     mode === "subscribe" &&
     token === process.env.VERIFY_TOKEN
   ) {
-    console.log("✅ Webhook Verified");
+    console.log("✅Webhook Verified");
     return res.status(200).send(challenge);
   }
 
