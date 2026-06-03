@@ -1,7 +1,7 @@
 const express = require("express");
 
 const router = express.Router();
-
+const { sendTextMessage } = require("../utils/whatsapp");
 // Webhook Verification
 router.get("/", (req, res) => {
   const mode = req.query["hub.mode"];
@@ -20,11 +20,47 @@ router.get("/", (req, res) => {
 });
 
 // Incoming Messages
-router.post("/", (req, res) => {
-  console.log("🔥 WEBHOOK HIT");
-  console.log(JSON.stringify(req.body, null, 2));
+router.post("/", async (req, res) => {
+  try {
+    console.log("🔥 WEBHOOK HIT");
 
-  return res.sendStatus(200);
+    const message =
+      req.body?.entry?.[0]?.changes?.[0]?.value?.messages?.[0];
+
+    if (message) {
+      const from = message.from;
+      const text = message.text?.body;
+
+      console.log("From:", from);
+      console.log("Message:", text);
+
+      await sendTextMessage(
+        from,
+        `Welcome to SPL Piston 🚀
+
+We manufacture:
+
+• Pistons
+• Piston Rings
+• Connecting Rods
+• Cylinder Blocks
+• Engine Components
+
+Reply:
+
+1 - Product Catalog
+2 - Export Inquiry
+3 - OEM Partnership
+4 - Contact Sales
+5 - Company Information`
+      );
+    }
+
+    return res.sendStatus(200);
+  } catch (error) {
+    console.error(error);
+    return res.sendStatus(500);
+  }
 });
 
 module.exports = router;
