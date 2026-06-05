@@ -152,21 +152,23 @@ Please enter Company Name:`
 
     // Contact Sales
     if (text === "4") {
-      await sendTextMessage(
-        from,
-        `📞 Contact Sales Team
 
-Mobile: +91 9927088886
+  users[from].flow = "callback";
+  users[from].step = "name";
 
-Email:
-jindaludyog@gmail.com
+  users[from].callbackData = {};
 
-Website:
-https://jindaludyog.com`
-      );
+  await sendTextMessage(
+    from,
+    `📞 Request a Callback
 
-      return res.sendStatus(200);
-    }
+Our sales team will contact you shortly.
+
+Please enter your Name:`
+  );
+
+  return res.sendStatus(200);
+}
 
     // About Company
     if (text === "5") {
@@ -355,7 +357,11 @@ await saveLead(
 
 https://drive.google.com/file/d/1YgkBA4Fswd-DE0PvGvqinHMDun_oURso/view`
     );
-await sendTextMessage(
+    users[from].flow = null;
+
+    return res.sendStatus(200);
+  }
+  await sendTextMessage(
   from,
   `If you need pricing, OEM supply, or export support, reply:
 
@@ -365,10 +371,6 @@ await sendTextMessage(
 
 4️⃣ Contact Sales Team`
 );
-    users[from].flow = null;
-
-    return res.sendStatus(200);
-  }
 }
 // EXPORT FLOW
 
@@ -607,6 +609,67 @@ if (users[from].flow === "oem") {
       `✅ OEM Partnership Request Submitted Successfully.
 
 Our business team will contact you shortly.`
+    );
+
+    return res.sendStatus(200);
+  }
+}
+
+// CALLBACK FLOW
+
+if (users[from].flow === "callback") {
+
+  if (users[from].step === "name") {
+
+    users[from].callbackData.name = text;
+    users[from].step = "phone";
+
+    await sendTextMessage(
+      from,
+      "Please enter your Phone Number:"
+    );
+
+    return res.sendStatus(200);
+  }
+
+  if (users[from].step === "phone") {
+
+    users[from].callbackData.phone = text;
+    users[from].step = "requirement";
+
+    await sendTextMessage(
+      from,
+      "Please describe your requirement:"
+    );
+
+    return res.sendStatus(200);
+  }
+
+  if (users[from].step === "requirement") {
+
+    users[from].callbackData.requirement = text;
+
+    await saveLead(
+      "Callback_Requests",
+      {
+        Date: new Date().toLocaleString(),
+        Name: users[from].callbackData.name,
+        Phone: users[from].callbackData.phone,
+        Requirement: users[from].callbackData.requirement
+      }
+    );
+
+    users[from].flow = null;
+    users[from].step = null;
+
+    await sendTextMessage(
+      from,
+      `✅ Callback Request Submitted Successfully.
+
+Our sales team will contact you shortly.
+
+📞 9927088886
+📧 jindaludyog@gmail.com`
     );
 
     return res.sendStatus(200);
