@@ -119,20 +119,21 @@ Please select:
 
     // OEM Partnership
     if (text === "3") {
-      await sendTextMessage(
-        from,
-        `🏭 OEM Partnership
 
-Please share:
+  users[from].flow = "oem";
+  users[from].step = "company";
 
-Company Name:
-Contact Person:
-Requirement:
-Annual Volume:`
-      );
+  users[from].oemData = {};
 
-      return res.sendStatus(200);
-    }
+  await sendTextMessage(
+    from,
+    `🏭 OEM Partnership
+
+Please enter Company Name:`
+  );
+
+  return res.sendStatus(200);
+}
 
     // Contact Sales
     if (text === "4") {
@@ -241,7 +242,119 @@ if (users[from].flow === "export") {
 
     return res.sendStatus(200);
   }
+// OEM PARTNERSHIP FLOW
 
+if (users[from].flow === "oem") {
+
+  if (users[from].step === "company") {
+
+    users[from].oemData.company = text;
+    users[from].step = "contact";
+
+    await sendTextMessage(
+      from,
+      "Please enter Contact Person Name:"
+    );
+
+    return res.sendStatus(200);
+  }
+
+  if (users[from].step === "contact") {
+
+    users[from].oemData.contact = text;
+    users[from].step = "email";
+
+    await sendTextMessage(
+      from,
+      "Please enter Email:"
+    );
+
+    return res.sendStatus(200);
+  }
+
+  if (users[from].step === "email") {
+
+    users[from].oemData.email = text;
+    users[from].step = "phone";
+
+    await sendTextMessage(
+      from,
+      "Please enter Phone Number:"
+    );
+
+    return res.sendStatus(200);
+  }
+
+  if (users[from].step === "phone") {
+
+    users[from].oemData.phone = text;
+    users[from].step = "requirement";
+
+    await sendTextMessage(
+      from,
+      "Please describe your OEM Requirement:"
+    );
+
+    return res.sendStatus(200);
+  }
+
+  if (users[from].step === "requirement") {
+
+    users[from].oemData.requirement = text;
+    users[from].step = "volume";
+
+    await sendTextMessage(
+      from,
+      "Expected Annual Volume?"
+    );
+
+    return res.sendStatus(200);
+  }
+
+  if (users[from].step === "volume") {
+
+    users[from].oemData.volume = text;
+    users[from].step = "remarks";
+
+    await sendTextMessage(
+      from,
+      "Any Additional Remarks?"
+    );
+
+    return res.sendStatus(200);
+  }
+
+  if (users[from].step === "remarks") {
+
+    users[from].oemData.remarks = text;
+
+    await saveLead(
+      "OEM_Partnership",
+      {
+        Date: new Date().toLocaleString(),
+        Company: users[from].oemData.company,
+        "Contact Person": users[from].oemData.contact,
+        Email: users[from].oemData.email,
+        Phone: users[from].oemData.phone,
+        Requirement: users[from].oemData.requirement,
+        "Annual Volume": users[from].oemData.volume,
+        Remarks: users[from].oemData.remarks
+      }
+    );
+
+    users[from].flow = null;
+    users[from].step = null;
+
+    await sendTextMessage(
+      from,
+      `✅ OEM Partnership Request Submitted Successfully.
+
+Our business team will contact you shortly.`
+    );
+
+    return res.sendStatus(200);
+  }
+}
   if (users[from].step === "product") {
 
     users[from].exportData.product = text;
