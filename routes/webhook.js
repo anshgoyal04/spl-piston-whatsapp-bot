@@ -50,6 +50,8 @@ router.post("/", async (req, res) => {
     if (
       !users[from].welcomed ||
       text === "hi" ||
+      text === "hii"||
+      text === "hey"||
       text === "hello" ||
       text === "start" ||
       text === "menu"
@@ -300,23 +302,28 @@ Our team will contact you shortly.`
     return res.sendStatus(200);
   }
 }
-    // Invalid Option
-    await sendTextMessage(
-      from,
-      `❌ Invalid Option
+    if (
+  text === "thanks" ||
+  text === "thank you" ||
+  text === "ok" ||
+  text === "okay"
+) {
+  await sendTextMessage(
+    from,
+    `🙏 Thank you for contacting SPL Piston.
 
-Please choose:
+Type "menu" anytime to view available options.`
+  );
 
-1️⃣ Product Catalog
-2️⃣ Export Inquiry
-3️⃣ OEM Partnership
-4️⃣ Contact Sales Team
-5️⃣ About SPL Piston
+  return res.sendStatus(200);
+}
 
-Type "menu" anytime to open the menu again.`
-    );
+await sendTextMessage(
+  from,
+  `Type "menu" to view available options.`
+);
 
-    return res.sendStatus(200);
+return res.sendStatus(200);
 
   } catch (error) {
     console.error(error);
