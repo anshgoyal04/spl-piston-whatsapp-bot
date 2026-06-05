@@ -242,6 +242,67 @@ if (users[from].flow === "export") {
 
     return res.sendStatus(200);
   }
+
+  if (users[from].step === "product") {
+
+    users[from].exportData.product = text;
+    users[from].step = "quantity";
+
+    await sendTextMessage(
+      from,
+      "Please enter Expected Quantity:"
+    );
+
+    return res.sendStatus(200);
+  }
+
+  if (users[from].step === "quantity") {
+
+    users[from].exportData.quantity = text;
+    users[from].step = "remarks";
+
+    await sendTextMessage(
+      from,
+      "Any Additional Remarks?"
+    );
+
+    return res.sendStatus(200);
+  }
+
+  if (users[from].step === "remarks") {
+
+    users[from].exportData.remarks = text;
+
+    await saveLead(
+      "Export_Inquiries",
+      {
+        Date: new Date().toLocaleString(),
+        Name: users[from].exportData.name,
+        Company: users[from].exportData.company,
+        Country: users[from].exportData.country,
+        Email: users[from].exportData.email,
+        Phone: users[from].exportData.phone,
+        Product: users[from].exportData.product,
+        Quantity: users[from].exportData.quantity,
+        Remarks: users[from].exportData.remarks
+      }
+    );
+
+    users[from].flow = null;
+    users[from].step = null;
+
+    await sendTextMessage(
+      from,
+      `✅ Thank you!
+
+Your Export Inquiry has been submitted successfully.
+
+Our team will contact you shortly.`
+    );
+
+    return res.sendStatus(200);
+  }
+}
 // OEM PARTNERSHIP FLOW
 
 if (users[from].flow === "oem") {
@@ -350,66 +411,6 @@ if (users[from].flow === "oem") {
       `✅ OEM Partnership Request Submitted Successfully.
 
 Our business team will contact you shortly.`
-    );
-
-    return res.sendStatus(200);
-  }
-}
-  if (users[from].step === "product") {
-
-    users[from].exportData.product = text;
-    users[from].step = "quantity";
-
-    await sendTextMessage(
-      from,
-      "Please enter Expected Quantity:"
-    );
-
-    return res.sendStatus(200);
-  }
-
-  if (users[from].step === "quantity") {
-
-    users[from].exportData.quantity = text;
-    users[from].step = "remarks";
-
-    await sendTextMessage(
-      from,
-      "Any Additional Remarks?"
-    );
-
-    return res.sendStatus(200);
-  }
-
-  if (users[from].step === "remarks") {
-
-    users[from].exportData.remarks = text;
-
-    await saveLead(
-      "Export_Inquiries",
-      {
-        Date: new Date().toLocaleString(),
-        Name: users[from].exportData.name,
-        Company: users[from].exportData.company,
-        Country: users[from].exportData.country,
-        Email: users[from].exportData.email,
-        Phone: users[from].exportData.phone,
-        Product: users[from].exportData.product,
-        Quantity: users[from].exportData.quantity,
-        Remarks: users[from].exportData.remarks
-      }
-    );
-
-    users[from].flow = null;
-    users[from].step = null;
-
-    await sendTextMessage(
-      from,
-      `✅ Thank you!
-
-Your Export Inquiry has been submitted successfully.
-
-Our team will contact you shortly.`
     );
 
     return res.sendStatus(200);
