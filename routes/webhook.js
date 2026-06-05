@@ -1,5 +1,6 @@
 const express = require("express");
 const users = require("../data/users");
+const { saveLead } = require("../utils/saveLead");
 const { sendTextMessage } = require("../utils/whatsapp");
 
 const router = express.Router();
@@ -100,21 +101,19 @@ Please select:
     }
 
     // Export Inquiry
-    if (text === "2") {
-      await sendTextMessage(
-        from,
-        `🌍 Export Inquiry
+   if (text === "2") {
 
-Please share:
+  users[from].flow = "export";
+  users[from].step = "name";
+  users[from].exportData = {};
 
-Company Name:
-Country:
-Required Product:
-Expected Quantity:`
-      );
+  await sendTextMessage(
+    from,
+    "🌍 Export Inquiry\n\nPlease enter your Name:"
+  );
 
-      return res.sendStatus(200);
-    }
+  return res.sendStatus(200);
+}
 
     // OEM Partnership
     if (text === "3") {
@@ -172,7 +171,135 @@ https://jindaludyog.com`
 
       return res.sendStatus(200);
     }
+// EXPORT FLOW
 
+if (users[from].flow === "export") {
+
+  if (users[from].step === "name") {
+
+    users[from].exportData.name = text;
+    users[from].step = "company";
+
+    await sendTextMessage(
+      from,
+      "Please enter Company Name:"
+    );
+
+    return res.sendStatus(200);
+  }
+
+  if (users[from].step === "company") {
+
+    users[from].exportData.company = text;
+    users[from].step = "country";
+
+    await sendTextMessage(
+      from,
+      "Please enter Country:"
+    );
+
+    return res.sendStatus(200);
+  }
+
+  if (users[from].step === "country") {
+
+    users[from].exportData.country = text;
+    users[from].step = "email";
+
+    await sendTextMessage(
+      from,
+      "Please enter Email:"
+    );
+
+    return res.sendStatus(200);
+  }
+
+  if (users[from].step === "email") {
+
+    users[from].exportData.email = text;
+    users[from].step = "phone";
+
+    await sendTextMessage(
+      from,
+      "Please enter Phone Number:"
+    );
+
+    return res.sendStatus(200);
+  }
+
+  if (users[from].step === "phone") {
+
+    users[from].exportData.phone = text;
+    users[from].step = "product";
+
+    await sendTextMessage(
+      from,
+      "Please enter Required Product:"
+    );
+
+    return res.sendStatus(200);
+  }
+
+  if (users[from].step === "product") {
+
+    users[from].exportData.product = text;
+    users[from].step = "quantity";
+
+    await sendTextMessage(
+      from,
+      "Please enter Expected Quantity:"
+    );
+
+    return res.sendStatus(200);
+  }
+
+  if (users[from].step === "quantity") {
+
+    users[from].exportData.quantity = text;
+    users[from].step = "remarks";
+
+    await sendTextMessage(
+      from,
+      "Any Additional Remarks?"
+    );
+
+    return res.sendStatus(200);
+  }
+
+  if (users[from].step === "remarks") {
+
+    users[from].exportData.remarks = text;
+
+    await saveLead(
+      "Export_Inquiries",
+      {
+        Date: new Date().toLocaleString(),
+        Name: users[from].exportData.name,
+        Company: users[from].exportData.company,
+        Country: users[from].exportData.country,
+        Email: users[from].exportData.email,
+        Phone: users[from].exportData.phone,
+        Product: users[from].exportData.product,
+        Quantity: users[from].exportData.quantity,
+        Remarks: users[from].exportData.remarks
+      }
+    );
+
+    users[from].flow = null;
+    users[from].step = null;
+
+    await sendTextMessage(
+      from,
+      `✅ Thank you!
+
+Your Export Inquiry has been submitted successfully.
+
+Our team will contact you shortly.`
+    );
+
+    return res.sendStatus(200);
+  }
+}
     // Invalid Option
     await sendTextMessage(
       from,
