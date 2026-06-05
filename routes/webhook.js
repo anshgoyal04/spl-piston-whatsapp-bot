@@ -86,22 +86,37 @@ Please choose:
     }
 
     // Product Catalog
-    if (text === "1") {
-      await sendTextMessage(
-        from,
-        `📘 Product Catalog
+   if (text === "1") {
+
+  users[from].flow = "catalog";
+
+  await sendTextMessage(
+    from,
+    `📚 SPL Piston Product Catalog
 
 Please select:
 
-1.1 - Pistons
-1.2 - Piston Rings
-1.3 - Connecting Rods
-1.4 - Complete Product Range`
-      );
+1.1 Hero Honda
 
-      return res.sendStatus(200);
-    }
+1.2 Bajaj
 
+1.3 Honda
+
+1.4 Yamaha
+
+1.5 TVS Suzuki
+
+1.6 Mahindra
+
+1.7 LML Group
+
+1.8 BS6 Models
+
+Type the option number.`
+  );
+
+  return res.sendStatus(200);
+}
     // Export Inquiry
    if (text === "2") {
 
@@ -174,6 +189,122 @@ https://jindaludyog.com`
 
       return res.sendStatus(200);
     }
+    // CATALOG FLOW
+
+if (users[from].flow === "catalog") {
+
+  if (text === "1.1") {
+
+    await sendTextMessage(
+      from,
+      `📄 Hero Honda Catalog
+
+https://drive.google.com/file/d/1LgU-qxh4fcut4ykfAL9R9u8VSL9_SfLi/view`
+    );
+
+    users[from].flow = null;
+
+    return res.sendStatus(200);
+  }
+
+  if (text === "1.2") {
+
+    await sendTextMessage(
+      from,
+      `📄 Bajaj Catalog
+
+https://drive.google.com/file/d/191MzUXoTRws8Excec_58p_OCmdTJWBV9/view`
+    );
+
+    users[from].flow = null;
+
+    return res.sendStatus(200);
+  }
+
+  if (text === "1.3") {
+
+    await sendTextMessage(
+      from,
+      `📄 Honda Catalog
+
+https://drive.google.com/file/d/1gVFzN_E-mluU-cD0lw7CZ8qB21_47PhS/view`
+    );
+
+    users[from].flow = null;
+
+    return res.sendStatus(200);
+  }
+
+  if (text === "1.4") {
+
+    await sendTextMessage(
+      from,
+      `📄 Yamaha Catalog
+
+https://drive.google.com/file/d/1bjuPepLZjXgJn1mD5_8ZTrd_1eFUl8zy/view`
+    );
+
+    users[from].flow = null;
+
+    return res.sendStatus(200);
+  }
+
+  if (text === "1.5") {
+
+    await sendTextMessage(
+      from,
+      `📄 TVS Suzuki Catalog
+
+https://drive.google.com/file/d/1sUvfbU2vLV1_miSQrTxhgxJsWNajuBnb/view`
+    );
+
+    users[from].flow = null;
+
+    return res.sendStatus(200);
+  }
+
+  if (text === "1.6") {
+
+    await sendTextMessage(
+      from,
+      `📄 Mahindra Catalog
+
+https://drive.google.com/file/d/1PvRq6g5C4SsEqOHcD47ZoeD_GJlkrqOo/view`
+    );
+
+    users[from].flow = null;
+
+    return res.sendStatus(200);
+  }
+
+  if (text === "1.7") {
+
+    await sendTextMessage(
+      from,
+      `📄 LML Group Catalog
+
+https://drive.google.com/file/d/1tqXyHknghEQqzAnBCkBd1nYcvjlvfCSR/view`
+    );
+
+    users[from].flow = null;
+
+    return res.sendStatus(200);
+  }
+
+  if (text === "1.8") {
+
+    await sendTextMessage(
+      from,
+      `📄 BS6 Models Catalog
+
+https://drive.google.com/file/d/1YgkBA4Fswd-DE0PvGvqinHMDun_oURso/view`
+    );
+
+    users[from].flow = null;
+
+    return res.sendStatus(200);
+  }
+}
 // EXPORT FLOW
 
 if (users[from].flow === "export") {
