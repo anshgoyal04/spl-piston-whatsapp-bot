@@ -39,15 +39,6 @@ router.post("/", async (req, res) => {
 
     console.log("From:", from);
     console.log("Message:", text);
- if (text === "testnotify") {
-
-  await sendTextMessage(
-    "917500485737",
-    "✅ SPL Piston Notification Test Successful"
-  );
-
-  return res.sendStatus(200);
-}
     if (!users[from]) {
       users[from] = {
         welcomed: false,
@@ -493,7 +484,26 @@ if (users[from].flow === "export") {
         Remarks: users[from].exportData.remarks
       }
     );
+await sendTextMessage(
+  "917500485737",
+  `🔔 NEW EXPORT INQUIRY
 
+👤 Name: ${users[from].exportData.name}
+
+🏢 Company: ${users[from].exportData.company}
+
+🌍 Country: ${users[from].exportData.country}
+
+📧 Email: ${users[from].exportData.email}
+
+📱 Phone: ${users[from].exportData.phone}
+
+⚙ Product: ${users[from].exportData.product}
+
+📦 Quantity: ${users[from].exportData.quantity}
+
+📝 Remarks: ${users[from].exportData.remarks}`
+);
     users[from].flow = null;
     users[from].step = null;
 
@@ -611,7 +621,24 @@ if (users[from].flow === "oem") {
 
     users[from].flow = null;
     users[from].step = null;
+await sendTextMessage(
+  "917500485737",
+  `🔔 NEW OEM PARTNERSHIP
 
+🏢 Company: ${users[from].oemData.company}
+
+👤 Contact: ${users[from].oemData.contact}
+
+📧 Email: ${users[from].oemData.email}
+
+📱 Phone: ${users[from].oemData.phone}
+
+⚙ Requirement: ${users[from].oemData.requirement}
+
+📦 Annual Volume: ${users[from].oemData.volume}
+
+📝 Remarks: ${users[from].oemData.remarks}`
+);
     await sendTextMessage(
       from,
       `✅ OEM Partnership Request Submitted Successfully.
@@ -666,7 +693,18 @@ if (users[from].flow === "callback") {
         Requirement: users[from].callbackData.requirement
       }
     );
+await sendTextMessage(
+  "917500485737",
+  `🔔 NEW CALLBACK REQUEST
 
+👤 Name: ${users[from].callbackData.name}
+
+📱 Phone: ${users[from].callbackData.phone}
+
+📝 Requirement:
+
+${users[from].callbackData.requirement}`
+);
     users[from].flow = null;
     users[from].step = null;
 
