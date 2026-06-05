@@ -24,6 +24,15 @@ router.get("/", (req, res) => {
 
 // Incoming Messages
 router.post("/", async (req, res) => {
+  if (text === "testnotify") {
+
+  await sendTextMessage(
+    "917500485737",
+    "✅ SPL Piston Notification Test Successful"
+  );
+
+  return res.sendStatus(200);
+}
   try {
     console.log("🔥 WEBHOOK HIT");
 
