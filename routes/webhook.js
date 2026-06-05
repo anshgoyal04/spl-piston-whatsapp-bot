@@ -194,7 +194,14 @@ https://jindaludyog.com`
 if (users[from].flow === "catalog") {
 
   if (text === "1.1") {
-
+await saveLead(
+  "General_Leads",
+  {
+    Date: new Date().toLocaleString(),
+    Phone: from,
+    Activity: "Downloaded Bajaj Catalog"
+  }
+);
     await sendTextMessage(
       from,
       `📄 Hero Honda Catalog
@@ -208,7 +215,14 @@ https://drive.google.com/file/d/1LgU-qxh4fcut4ykfAL9R9u8VSL9_SfLi/view`
   }
 
   if (text === "1.2") {
-
+await saveLead(
+  "General_Leads",
+  {
+    Date: new Date().toLocaleString(),
+    Phone: from,
+    Activity: "Downloaded Bajaj Catalog"
+  }
+);
     await sendTextMessage(
       from,
       `📄 Bajaj Catalog
@@ -222,7 +236,14 @@ https://drive.google.com/file/d/191MzUXoTRws8Excec_58p_OCmdTJWBV9/view`
   }
 
   if (text === "1.3") {
-
+await saveLead(
+  "General_Leads",
+  {
+    Date: new Date().toLocaleString(),
+    Phone: from,
+    Activity: "Downloaded Honda Catalog"
+  }
+);
     await sendTextMessage(
       from,
       `📄 Honda Catalog
@@ -236,7 +257,14 @@ https://drive.google.com/file/d/1gVFzN_E-mluU-cD0lw7CZ8qB21_47PhS/view`
   }
 
   if (text === "1.4") {
-
+await saveLead(
+  "General_Leads",
+  {
+    Date: new Date().toLocaleString(),
+    Phone: from,
+    Activity: "Downloaded Yamaha Catalog"
+  }
+);
     await sendTextMessage(
       from,
       `📄 Yamaha Catalog
@@ -250,7 +278,14 @@ https://drive.google.com/file/d/1bjuPepLZjXgJn1mD5_8ZTrd_1eFUl8zy/view`
   }
 
   if (text === "1.5") {
-
+await saveLead(
+  "General_Leads",
+  {
+    Date: new Date().toLocaleString(),
+    Phone: from,
+    Activity: "Downloaded TVS Suzuki Catalog"
+  }
+);
     await sendTextMessage(
       from,
       `📄 TVS Suzuki Catalog
@@ -264,7 +299,14 @@ https://drive.google.com/file/d/1sUvfbU2vLV1_miSQrTxhgxJsWNajuBnb/view`
   }
 
   if (text === "1.6") {
-
+await saveLead(
+  "General_Leads",
+  {
+    Date: new Date().toLocaleString(),
+    Phone: from,
+    Activity: "Downloaded Mahindra Catalog"
+  }
+);
     await sendTextMessage(
       from,
       `📄 Mahindra Catalog
@@ -278,7 +320,14 @@ https://drive.google.com/file/d/1PvRq6g5C4SsEqOHcD47ZoeD_GJlkrqOo/view`
   }
 
   if (text === "1.7") {
-
+await saveLead(
+  "General_Leads",
+  {
+    Date: new Date().toLocaleString(),
+    Phone: from,
+    Activity: "Downloaded LML Group Catalog"
+  }
+);
     await sendTextMessage(
       from,
       `📄 LML Group Catalog
@@ -292,14 +341,30 @@ https://drive.google.com/file/d/1tqXyHknghEQqzAnBCkBd1nYcvjlvfCSR/view`
   }
 
   if (text === "1.8") {
-
+await saveLead(
+  "General_Leads",
+  {
+    Date: new Date().toLocaleString(),
+    Phone: from,
+    Activity: "Downloaded BS6 Models Catalog"
+  }
+);
     await sendTextMessage(
       from,
       `📄 BS6 Models Catalog
 
 https://drive.google.com/file/d/1YgkBA4Fswd-DE0PvGvqinHMDun_oURso/view`
     );
+await sendTextMessage(
+  from,
+  `If you need pricing, OEM supply, or export support, reply:
 
+2️⃣ Export Inquiry
+
+3️⃣ OEM Partnership
+
+4️⃣ Contact Sales Team`
+);
     users[from].flow = null;
 
     return res.sendStatus(200);
