@@ -52,7 +52,7 @@ router.get("/", async (req, res) => {
 
       {
         headers: {
-          Authorization: `Bearer ${process.env.TOKEN}`,
+          Authorization: `Bearer ${process.env.WHATSAPP_TOKEN}`,
           "Content-Type": "application/json"
         }
       }
