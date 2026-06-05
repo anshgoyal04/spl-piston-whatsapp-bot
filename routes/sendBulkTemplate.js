@@ -1,0 +1,105 @@
+const express = require("express");
+const axios = require("axios");
+
+const router = express.Router();
+
+router.get("/", async (req, res) => {
+
+  try {
+
+    const sheetResponse = await axios.get(
+      "https://script.google.com/macros/s/AKfycbz2Oi-snSlZ10Luhn2R-SaYvUy6kGEFAXjNyntpF8aNWsHPXCei3288yQevGZH8Ou2o1w/exec"
+    );
+
+    const leads = sheetResponse.data;
+
+    let sent = 0;
+
+    for (const lead of leads) {
+
+      if (
+        !lead.phone ||
+        lead.status === "Sent"
+      ) {
+        continue;
+      }
+
+      try {
+
+        await axios.post(
+
+          `https://graph.facebook.com/v23.0/${process.env.PHONE_NUMBER_ID}/messages`,
+
+          {
+            messaging_product: "whatsapp",
+
+            to: lead.phone,
+
+            type: "template",
+
+            template: {
+
+              name: "spl_piston_intro",
+
+              language: {
+                code: "en"
+              },
+
+              components: [
+                {
+                  type: "header",
+
+                  parameters: [
+                    {
+                      type: "image",
+
+                      image: {
+                        link: "https://drive.google.com/uc?export=view&id=1cO6Q_RMc-Iuke5RTBnn0RQaMRtmETVW8"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+
+          {
+            headers: {
+              Authorization: `Bearer ${process.env.WHATSAPP_TOKEN}`,
+              "Content-Type": "application/json"
+            }
+          }
+        );
+
+        sent++;
+
+        console.log(
+          `Template sent to ${lead.phone}`
+        );
+
+      } catch (err) {
+
+        console.log(
+          `Failed ${lead.phone}`
+        );
+
+      }
+
+      await new Promise(resolve =>
+        setTimeout(resolve, 1500)
+      );
+    }
+
+    res.send(
+      `${sent} templates sent successfully`
+    );
+
+  } catch (error) {
+
+    console.log(error.message);
+
+    res.status(500).send("Error");
+  }
+});
+
+module.exports = router;

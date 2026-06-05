@@ -3,6 +3,13 @@ const sendTemplateRoute = require("./routes/sendTemplate");
 require("dotenv").config();
 const webhookRoute = require("./routes/webhook");
 const app = express();
+const sendBulkTemplateRoute =
+require("./routes/sendBulkTemplate");
+
+app.use(
+  "/send-bulk-template",
+  sendBulkTemplateRoute
+);
 app.use("/send-template", sendTemplateRoute);
 app.use(express.json());
 app.use("/webhook", webhookRoute);
