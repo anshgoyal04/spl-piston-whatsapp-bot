@@ -4,7 +4,15 @@ const axios = require("axios");
 const router = express.Router();
 
 router.get("/", async (req, res) => {
+      console.log("🚀 BULK TEMPLATE ROUTE HIT");
+  console.log("IP:", req.ip);
+  console.log("Time:", new Date());
 
+  const secret = req.query.secret;
+
+  if (secret !== "spl123") {
+    return res.status(401).send("Unauthorized");
+  }
   try {
 
     const sheetResponse = await axios.get(
