@@ -39,7 +39,7 @@ router.get("/", async (req, res) => {
 
             template: {
 
-              name: "spl_piston_intro",
+              name: "new_product_temp",
 
               language: {
                 code: "en"
@@ -54,7 +54,7 @@ router.get("/", async (req, res) => {
                       type: "image",
 
                       image: {
-                        link: "https://drive.google.com/uc?export=view&id=1cO6Q_RMc-Iuke5RTBnn0RQaMRtmETVW8"
+                        link: "https://drive.google.com/file/d/1XwQhGCgKGwFq2IMW1eySrmCMRUHBEAyW/view?usp=sharing"
                       }
                     }
                   ]
