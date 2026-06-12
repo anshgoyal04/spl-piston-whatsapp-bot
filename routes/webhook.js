@@ -485,7 +485,7 @@ if (users[from].flow === "export") {
       }
     );
 await sendTextMessage(
-  "917500485737",
+  "919927088886",
   `🔔 NEW EXPORT INQUIRY
 
 👤 Name: ${users[from].exportData.name}
@@ -622,7 +622,7 @@ if (users[from].flow === "oem") {
     users[from].flow = null;
     users[from].step = null;
 await sendTextMessage(
-  "917500485737",
+  "919927088886",
   `🔔 NEW OEM PARTNERSHIP
 
 🏢 Company: ${users[from].oemData.company}
@@ -694,7 +694,7 @@ if (users[from].flow === "callback") {
       }
     );
 await sendTextMessage(
-  "917500485737",
+  "919927088886",
   `🔔 NEW CALLBACK REQUEST
 
 👤 Name: ${users[from].callbackData.name}
