@@ -2,7 +2,7 @@ const express = require("express");
 const axios = require("axios");
 
 const router = express.Router();
-
+console.log("TEMPLATE = new_product_temp");
 router.get("/", async (req, res) => {
       console.log("🚀 BULK TEMPLATE ROUTE HIT");
   console.log("IP:", req.ip);
@@ -107,6 +107,13 @@ router.get("/", async (req, res) => {
     console.log(error.message);
 
     res.status(500).send("Error");
+    console.log(
+    JSON.stringify(
+      err.response?.data,
+      null,
+      2
+    )
+  );
   }
 });
 
