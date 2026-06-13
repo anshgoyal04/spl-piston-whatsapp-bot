@@ -2,9 +2,10 @@ const express = require("express");
 const axios = require("axios");
 
 const router = express.Router();
-console.log("TEMPLATE = new_product_temp");
+
 router.get("/", async (req, res) => {
-      console.log("🚀 BULK TEMPLATE ROUTE HIT");
+
+  console.log("🚀 BULK TEMPLATE ROUTE HIT");
   console.log("IP:", req.ip);
   console.log("Time:", new Date());
 
@@ -13,6 +14,7 @@ router.get("/", async (req, res) => {
   if (secret !== "spl123") {
     return res.status(401).send("Unauthorized");
   }
+
   try {
 
     const sheetResponse = await axios.get(
@@ -34,7 +36,11 @@ router.get("/", async (req, res) => {
 
       try {
 
-        await axios.post(
+        console.log(
+          `Sending To: ${lead.phone}`
+        );
+
+        const response = await axios.post(
 
           `https://graph.facebook.com/v23.0/${process.env.PHONE_NUMBER_ID}/messages`,
 
@@ -62,7 +68,7 @@ router.get("/", async (req, res) => {
                       type: "image",
 
                       image: {
-                        link: "https://drive.google.com/file/d/1XwQhGCgKGwFq2IMW1eySrmCMRUHBEAyW/view?usp=sharing"
+                        link: "https://drive.google.com/uc?export=view&id=1XwQhGCgKGwFq2IMW1eySrmCMRUHBEAyW"
                       }
                     }
                   ]
@@ -79,18 +85,33 @@ router.get("/", async (req, res) => {
           }
         );
 
+        console.log(
+          JSON.stringify(
+            response.data,
+            null,
+            2
+          )
+        );
+
         sent++;
 
         console.log(
-          `Template sent to ${lead.phone}`
+          `✅ Template sent to ${lead.phone}`
         );
 
       } catch (err) {
 
         console.log(
-          `Failed ${lead.phone}`
+          `❌ Failed ${lead.phone}`
         );
 
+        console.log(
+          JSON.stringify(
+            err.response?.data,
+            null,
+            2
+          )
+        );
       }
 
       await new Promise(resolve =>
@@ -98,22 +119,15 @@ router.get("/", async (req, res) => {
       );
     }
 
-    res.send(
+    return res.send(
       `${sent} templates sent successfully`
     );
 
   } catch (error) {
 
-    console.log(error.message);
+    console.log(error);
 
-    res.status(500).send("Error");
-    console.log(
-    JSON.stringify(
-      err.response?.data,
-      null,
-      2
-    )
-  );
+    return res.status(500).send("Error");
   }
 });
 

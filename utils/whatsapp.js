@@ -1,6 +1,8 @@
 const axios = require("axios");
 
 async function sendTextMessage(to, message) {
+  console.log("TOKEN:", process.env.TOKEN);
+console.log("PHONE ID:", process.env.PHONE_NUMBER_ID);
   try {
     await axios.post(
       `https://graph.facebook.com/v23.0/${process.env.PHONE_NUMBER_ID}/messages`,
