@@ -6,13 +6,6 @@ const router = express.Router();
 router.get("/", async (req, res) => {
   try {
 
-    const number = req.query.number;
-    const message = req.query.message;
-
-    if (!number || !message) {
-      return res.send("Please provide number and message");
-    }
-
     const response = await axios.post(
       `https://graph.facebook.com/v23.0/${process.env.PHONE_NUMBER_ID}/messages`,
        {
