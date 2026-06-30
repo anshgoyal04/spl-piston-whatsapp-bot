@@ -23,8 +23,8 @@ Thank you for contacting **Jindal Udyog (India)**.
 Yes, we manufacture a complete range of **2-Wheeler and 3-Wheeler Pistons**. We offer a wide variety of piston models and sizes to meet different vehicle requirements.
 
 If you would like to speak with our team directly, please contact us at:
-📞 **+91 99270 88886**
-📞 **+91 75004 85737**
+📞 +91 99270 88886
+📞 +91 75004 85737
 
 Our team will be happy to provide complete product information, pricing, and assistance.
 
