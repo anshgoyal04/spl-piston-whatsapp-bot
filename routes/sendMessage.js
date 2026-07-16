@@ -11,28 +11,15 @@ router.get("/", async (req, res) => {
        {
     messaging_product: "whatsapp",
 
-    to: "919677157230", // Customer Number
-// to: "917500485737",
-    type: "text",
+    //to: "919677157230", // Customer Number
+ to: "917500485737",
+    type: "document",
 
-    text: {
-      body: `Hello! 👋
-
-Thank you for contacting **Jindal Udyog (India)**.
-
-Yes, we manufacture a complete range of **2-Wheeler and 3-Wheeler Pistons**. We offer a wide variety of piston models and sizes to meet different vehicle requirements.
-
-If you would like to speak with our team directly, please contact us at:
-📞 +91 99270 88886
-📞 +91 75004 85737
-
-Our team will be happy to provide complete product information, pricing, and assistance.
-
-You can also explore our products and get more information through the menu available in this chat.
-
-Thank you for choosing Jindal Udyog (India). We look forward to serving you!
-`
-    }
+document: {
+  link: "https://drive.google.com/uc?export=download&id=1-9bKcWEWb-c17TbcgHBwE5fsNlHAJEeK",
+  filename: "Invoice.pdf",
+  caption: "Please find your invoice attached."
+}
   },
   {
     headers: {
