@@ -12,7 +12,8 @@ router.get("/", async (req, res) => {
     messaging_product: "whatsapp",
 
     //to: "919677157230", // Customer Number
- to: "917500485737",
+ to: "919927088886",
+//  to: "917500485737",
     type: "document",
 
 document: {
