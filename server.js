@@ -6,7 +6,7 @@ const app = express();
 const sendBulkTemplateRoute =
 require("./routes/sendBulkTemplate");
 const sendMessageRoute = require("./routes/sendMessage");
-
+app.use(express.static("public"));
 app.use("/send-message", sendMessageRoute);
 app.use(
   "/send-bulk-template",
